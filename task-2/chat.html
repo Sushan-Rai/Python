@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- webchat with rooms, dm, and storage -->
+     <link rel="stylesheet" href="style.css">
+    <title>WebChat</title>
+</head>
+
+<body>
+    <h1>WebSocket Chat</h1>
+    <!-- status check and when on change changeStatus function is called -->
+    <div class="panel">
+        <strong>Presence:</strong>
+        <select id="my-status" onchange="changeStatus()">
+            <option value="online">Online</option>
+            <option value="away">Away</option>
+        </select>
+        <div id="user-list" style="margin-top: 10px; font-size: 0.9em;"></div>
+    </div>
+    <!-- query to search history -->
+    <div class="panel">
+        <strong>Search History:</strong>
+        <input type="text" id="search-input" placeholder="Keyword...">
+        <button onclick="searchHistory()">Search</button>
+        <div id="search-results" style="margin-top: 10px;"></div>
+    </div>
+    <!-- current room is displayed and we can join other rooms -->
+    <div class="panel">
+        <strong>Current Room: <span id="current-room-display">#general</span></strong>
+        <div class="controls" style="margin-top: 10px;">
+            <input type="text" id="room-name" placeholder="e.g. #random">
+            <button type="button" onclick="switchRoom()">Join Room</button>
+        </div>
+    </div>
+    <!-- this is chatbox for broadcast message -->
+    <div class="panel">
+        <div id="chatbox"></div>
+        <div id="typing-indicator"></div>
+        <div class="controls">
+            <input type="text" id="message" placeholder="Type a message..." oninput="sendTypingIndicator()"
+                onkeypress="handleEnter(event, sendMessage)">
+            <button type="button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- this is the dm button -->
+    <div class="panel">
+        <strong>Send Direct Message</strong>
+        <div class="controls" style="margin-top: 10px;">
+            <input type="text" id="dm-user" placeholder="Target Username" style="width: 30%;">
+            <input type="text" id="dm-message" placeholder="Private Message..." style="width: 50%;"
+                onkeypress="handleEnter(event, sendDM)">
+            <button type="button" onclick="sendDM()">Send DM</button>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+
+</html>
