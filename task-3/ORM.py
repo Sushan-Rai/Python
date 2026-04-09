@@ -106,6 +106,9 @@ class Model:
             if not field.nullable: sql += " NOT NULL"
             if field.unique: sql += " UNIQUE"
             cols.append(sql)
+            if isinstance(field, ForeignKey):
+                ref_table = field.reference_model.__name__.lower()
+                cols.append(f"FOREIGN KEY ({col_name}) REFERENCES {ref_table}(id)")
         
         query = f"CREATE TABLE IF NOT EXISTS {table_name} (\n    {',\n    '.join(cols)}\n);"
         log_sql(query)
